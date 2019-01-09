@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Widget } from '../core/widgets/widget.model';
 import { WidgetsService } from '../core/widgets/widgets.service';
+import { select, Store } from '@ngrx/store';
+import { WidgetsState } from '../state/widgets/widgets.reducer';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { AppState } from '../state';
 
 @Component({
   selector: 'app-widgets',
@@ -8,12 +13,19 @@ import { WidgetsService } from '../core/widgets/widgets.service';
   styleUrls: ['./widgets.component.css']
 })
 export class WidgetsComponent implements OnInit {
+  widgets$: Observable<Widget[]>;
   widgets: Widget[];
   currentWidget: Widget;
 
   constructor(
     private widgetsService: WidgetsService,
-  ) {}
+    private store: Store<WidgetsState>
+  ) {
+    this.widgets$ = store.pipe(
+      select('widgets'),
+      map((state: WidgetsState) => state.widgets)
+    );
+  }
 
   ngOnInit() {
     this.getWidgets();
