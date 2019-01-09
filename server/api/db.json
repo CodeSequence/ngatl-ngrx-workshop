@@ -37,25 +37,19 @@
       "description": "This is a indigo item"
     },
     {
-      "id": "zSJ5Ihu"
-    },
-    {
-      "id": "OSjSMVN"
-    },
-    {
-      "id": "gxi9a4c"
-    },
-    {
-      "id": "Kz6D6fG"
-    },
-    {
-      "id": "FyYlTX2",
-      "name": "Test",
-      "price": "200",
-      "description": "test"
+      "id": "7",
+      "name": "Violet Item",
+      "price": 700,
+      "description": "This is a violet item"
     }
   ],
   "widgets": [
+    {
+      "id": "1",
+      "name": "Red Widget",
+      "price": 100,
+      "description": "This is a red widget"
+    },
     {
       "id": "2",
       "name": "Orange Widget",
