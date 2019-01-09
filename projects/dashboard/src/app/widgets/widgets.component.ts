@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Widget } from '../core/widgets/widget.model';
-import { WidgetsService } from '../core/widgets/widgets.service';
 import { select, Store } from '@ngrx/store';
 import { WidgetsState } from '../state/widgets/widgets.reducer';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AppState } from '../state';
 
 @Component({
   selector: 'app-widgets',
@@ -42,8 +40,7 @@ export class WidgetsComponent implements OnInit {
   }
 
   getWidgets() {
-    this.widgetsService.all()
-      .subscribe((widgets: Widget[]) => this.widgets = widgets);
+    // Pending
   }
 
   saveWidget(widget) {
@@ -55,26 +52,17 @@ export class WidgetsComponent implements OnInit {
   }
 
   createWidget(widget) {
-    this.widgetsService.create(widget)
-      .subscribe(response => {
-        this.getWidgets();
-        this.resetCurrentWidget();
-      });
+    this.store.dispatch({ type: 'create', payload: widget });
+    this.resetCurrentWidget();
   }
 
   updateWidget(widget) {
-    this.widgetsService.update(widget)
-      .subscribe(response => {
-        this.getWidgets();
-        this.resetCurrentWidget();
-      });
+    this.store.dispatch({ type: 'update', payload: widget });
+    this.resetCurrentWidget();
   }
 
   deleteWidget(widget) {
-    this.widgetsService.delete(widget)
-      .subscribe(response => {
-        this.getWidgets();
-        this.resetCurrentWidget();
-      });
+    this.store.dispatch({ type: 'delete', payload: widget });
+    this.resetCurrentWidget();
   }
 }
