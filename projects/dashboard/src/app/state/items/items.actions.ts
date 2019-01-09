@@ -30,7 +30,7 @@ export class LoadItems implements Action {
 
 export class ItemsLoadedSuccess implements Action {
   readonly type = ItemsActionTypes.ItemsLoadedSuccess;
-
+  
   constructor(public payload: Item[]) { }
 }
 
@@ -42,7 +42,7 @@ export class AddItem implements Action {
 
 export class AddItemSuccess implements Action {
   readonly type = ItemsActionTypes.ItemAddedSuccess;
-
+  
   constructor(public payload: Item) { }
 }
 
@@ -54,7 +54,7 @@ export class UpdateItem implements Action {
 
 export class UpdateItemSuccess implements Action {
   readonly type = ItemsActionTypes.ItemUpdatedSuccess;
-
+  
   constructor(public payload: Item) { }
 }
 
@@ -66,7 +66,7 @@ export class DeleteItem implements Action {
 
 export class DeleteItemSuccess implements Action {
   readonly type = ItemsActionTypes.ItemDeletedSuccess;
-
+  
   constructor(public payload: Item) { }
 }
 
@@ -79,4 +79,5 @@ export type ItemsActions = Items
   | UpdateItem
   | UpdateItemSuccess
   | DeleteItem
-  | DeleteItemSuccess;
+  | DeleteItemSuccess
+;
