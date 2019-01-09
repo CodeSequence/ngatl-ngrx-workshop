@@ -5,6 +5,8 @@ import { WidgetsState } from '../state/widgets/widgets.reducer';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import * as WidgetActions from '../state/widgets/widgets.actions';
+
 @Component({
   selector: 'app-widgets',
   templateUrl: './widgets.component.html',
@@ -52,17 +54,17 @@ export class WidgetsComponent implements OnInit {
   }
 
   createWidget(widget) {
-    this.store.dispatch({ type: 'create', payload: widget });
+    this.store.dispatch(new WidgetActions.AddWidget(widget));
     this.resetCurrentWidget();
   }
 
   updateWidget(widget) {
-    this.store.dispatch({ type: 'update', payload: widget });
+    this.store.dispatch(new WidgetActions.UpdateWidget(widget));
     this.resetCurrentWidget();
   }
 
   deleteWidget(widget) {
-    this.store.dispatch({ type: 'delete', payload: widget });
+    this.store.dispatch(new WidgetActions.DeleteWidget(widget));
     this.resetCurrentWidget();
   }
 }
