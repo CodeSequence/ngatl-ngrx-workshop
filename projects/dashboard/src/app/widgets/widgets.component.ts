@@ -14,11 +14,9 @@ import { AppState } from '../state';
 })
 export class WidgetsComponent implements OnInit {
   widgets$: Observable<Widget[]>;
-  widgets: Widget[];
   currentWidget: Widget;
 
   constructor(
-    private widgetsService: WidgetsService,
     private store: Store<WidgetsState>
   ) {
     this.widgets$ = store.pipe(
@@ -28,7 +26,6 @@ export class WidgetsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getWidgets();
     this.resetCurrentWidget();
   }
 
