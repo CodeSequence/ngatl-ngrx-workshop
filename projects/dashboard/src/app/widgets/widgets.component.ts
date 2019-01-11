@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Widget } from '../core/widgets/widget.model';
 import { select, Store } from '@ngrx/store';
-import { WidgetsState, initialWidgets } from '../state/widgets/widgets.reducer';
+import { WidgetsState } from '../state/widgets/widgets.reducer';
 import { Observable } from 'rxjs';
 
 import * as WidgetActions from '../state/widgets/widgets.actions';
@@ -40,7 +40,7 @@ export class WidgetsComponent implements OnInit {
   }
 
   getWidgets() {
-    this.store.dispatch(new WidgetActions.LoadWidgets(initialWidgets));
+    this.store.dispatch(new WidgetActions.LoadWidgets());
   }
 
   saveWidget(widget) {

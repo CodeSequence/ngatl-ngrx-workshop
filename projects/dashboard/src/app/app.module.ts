@@ -24,6 +24,7 @@ import { WidgetsComponent } from './widgets/widgets.component';
 
 import { reducers } from './state';
 import { ItemsEffects } from './state/items/items.effects';
+import { WidgetsEffects } from './state/widgets/widgets.effects';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,7 @@ import { ItemsEffects } from './state/items/items.effects';
     HttpClientModule,
     StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({ maxAge: 5 }),
-    EffectsModule.forRoot([ItemsEffects]),
+    EffectsModule.forRoot([ItemsEffects, WidgetsEffects]),
     TotalsViewModule
   ],
   bootstrap: [AppComponent]
