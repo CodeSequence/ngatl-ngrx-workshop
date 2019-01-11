@@ -30,6 +30,28 @@ export class WidgetsEffects {
         catchError(() => EMPTY)
       )
     )
+  );
+
+  @Effect()
+  updateWidget$ = this.actions$.pipe(
+    ofType(WidgetsActionTypes.UpdateWidget), 
+    mergeMap((action: WidgetActions.UpdateWidget) => 
+      this.widgetsService.update(action.payload).pipe(
+        map((res: Widget) => new WidgetActions.WidgetUpdated(res)),
+        catchError(() => EMPTY)
+      )
+    )
+  );
+
+  @Effect()
+  deleteWidget$ = this.actions$.pipe(
+    ofType(WidgetsActionTypes.DeleteWidget), 
+    mergeMap((action: WidgetActions.DeleteWidget) => 
+      this.widgetsService.delete(action.payload).pipe(
+        map((res: Widget) => new WidgetActions.WidgetDeleted(res)),
+        catchError(() => EMPTY)
+      )
+    )
   );  
 
   constructor(
