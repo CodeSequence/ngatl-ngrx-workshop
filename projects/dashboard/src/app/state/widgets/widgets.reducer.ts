@@ -50,3 +50,12 @@ export function widgetsReducer(
       return state;
   }
 }
+
+export const getSelectedWidgetId = (state: WidgetsState) => state.selectedWidgetId;
+
+// get the selectors
+const { selectIds, selectEntities, selectAll } = adapter.getSelectors();
+
+export const selectWidgetIds = selectIds;
+export const selectWidgetEntities = selectEntities;
+export const selectAllWidgets = selectAll;

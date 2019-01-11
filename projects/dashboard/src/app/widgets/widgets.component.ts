@@ -3,9 +3,9 @@ import { Widget } from '../core/widgets/widget.model';
 import { select, Store } from '@ngrx/store';
 import { WidgetsState, initialWidgets } from '../state/widgets/widgets.reducer';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import * as WidgetActions from '../state/widgets/widgets.actions';
+import * as fromRoot from '../state';
 
 @Component({
   selector: 'app-widgets',
@@ -19,11 +19,7 @@ export class WidgetsComponent implements OnInit {
   constructor(
     private store: Store<WidgetsState>
   ) {
-    this.widgets$ = store.pipe(
-      select('widgets'),
-      map((data: WidgetsState) => data.entities),
-      map(data => Object.keys(data).map(k => data[k]))
-    );
+    this.widgets$ = store.pipe(select(fromRoot.selectAllWidgets));
   }
 
   ngOnInit() {
