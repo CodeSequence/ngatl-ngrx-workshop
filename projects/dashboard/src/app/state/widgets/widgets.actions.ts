@@ -3,6 +3,7 @@ import { Action } from '@ngrx/store';
 
 export enum WidgetsActionTypes {
   WidgetSelected = '[Widgets Page] Widget Selected',
+  LoadWidgets = '[Widgets Page] Load Widgets',
   AddWidget = '[Widgets Page] Add Widget',
   UpdateWidget = '[Widgets Page] Update Widget',
   DeleteWidget = '[Widgets Page] Delete Widget'
@@ -10,6 +11,12 @@ export enum WidgetsActionTypes {
 
 export class SelectWidget implements Action {
   readonly type = WidgetsActionTypes.WidgetSelected;
+
+  constructor(public payload) {}
+}
+
+export class LoadWidgets implements Action {
+  readonly type = WidgetsActionTypes.LoadWidgets;
 
   constructor(public payload) {}
 }
@@ -33,6 +40,7 @@ export class DeleteWidget implements Action {
 }
 
 export type WidgetsActions = SelectWidget
+  | LoadWidgets
   | AddWidget
   | UpdateWidget
   | DeleteWidget

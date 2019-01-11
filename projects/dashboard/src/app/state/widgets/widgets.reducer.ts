@@ -1,9 +1,8 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { Widget } from '../../core/widgets/widget.model';
-import { Action } from '@ngrx/store';
 import { WidgetsActions, WidgetsActionTypes } from './widgets.actions';
 
-const initialWidgets = [
+export const initialWidgets = [
   {
     id: "1",
     name: "Red Widget",
@@ -24,21 +23,13 @@ const initialWidgets = [
   },
 ];
 
-const createWidget = (widgets, widget) => [...widgets, widget];
-const updateWidget = (widgets, widget) => widgets.map(w => {
-  return w.id === widget.id ? Object.assign({}, widget) : w;
-});
-const deleteWidget = (widgets, widget) => widgets.filter(w => widget.id !== w.id);
-
-export interface WidgetsState {
+export interface WidgetsState extends EntityState<Widget> {
   selectedWidgetId: string | null;
-  widgets: Widget[];
 }
-
-export const initialState: WidgetsState = {
-  selectedWidgetId: null,
-  widgets: initialWidgets
-};
+export const adapter: EntityAdapter<Widget> = createEntityAdapter<Widget>();
+export const initialState: WidgetsState = adapter.getInitialState({
+  selectedWidgetId: null
+});
 
 export function widgetsReducer(
   state = initialState,
@@ -46,25 +37,15 @@ export function widgetsReducer(
 ): WidgetsState {
   switch (action.type) {
     case WidgetsActionTypes.WidgetSelected:
-      return {
-        selectedWidgetId: action.payload.id,
-        widgets: state.widgets
-      };
+      return Object.assign({}, state, { selectedWidgetId: action.payload});
+    case WidgetsActionTypes.LoadWidgets:
+      return adapter.addAll(action.payload, state);
     case WidgetsActionTypes.AddWidget:
-      return {
-        selectedWidgetId: state.selectedWidgetId,
-        widgets: createWidget(state.widgets, action.payload)
-      };
+      return adapter.addOne(action.payload, state);
     case WidgetsActionTypes.UpdateWidget:
-      return {
-        selectedWidgetId: state.selectedWidgetId,
-        widgets: updateWidget(state.widgets, action.payload)
-      };
+      return adapter.upsertOne(action.payload, state);
     case WidgetsActionTypes.DeleteWidget:
-      return {
-        selectedWidgetId: state.selectedWidgetId,
-        widgets: deleteWidget(state.widgets, action.payload)
-      };    
+      return adapter.removeOne(action.payload.id, state);
     default:
       return state;
   }

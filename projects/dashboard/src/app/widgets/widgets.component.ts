@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Widget } from '../core/widgets/widget.model';
 import { select, Store } from '@ngrx/store';
-import { WidgetsState } from '../state/widgets/widgets.reducer';
+import { WidgetsState, initialWidgets } from '../state/widgets/widgets.reducer';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -21,11 +21,13 @@ export class WidgetsComponent implements OnInit {
   ) {
     this.widgets$ = store.pipe(
       select('widgets'),
-      map((state: WidgetsState) => state.widgets)
+      map((data: WidgetsState) => data.entities),
+      map(data => Object.keys(data).map(k => data[k]))
     );
   }
 
   ngOnInit() {
+    this.getWidgets();
     this.resetCurrentWidget();
   }
 
@@ -42,7 +44,7 @@ export class WidgetsComponent implements OnInit {
   }
 
   getWidgets() {
-    // Pending
+    this.store.dispatch(new WidgetActions.LoadWidgets(initialWidgets));
   }
 
   saveWidget(widget) {
