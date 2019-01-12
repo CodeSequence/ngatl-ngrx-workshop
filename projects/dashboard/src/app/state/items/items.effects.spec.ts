@@ -5,7 +5,7 @@ import { cold, hot } from 'jasmine-marbles';
 import { Observable, of, throwError } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
-import { AddItem, DeleteItem, AddItemSuccess, DeleteItemSuccess, ItemsLoadedSuccess, UpdateItemSuccess, LoadItems, UpdateItem } from './items.actions';
+import { AddItem, DeleteItem, ItemAdded, ItemDeleted, ItemsLoaded, UpdateItem, LoadItems, ItemUpdated } from './items.actions';
 import { ItemsEffects } from './items.effects';
 import { ItemsService } from '../../core/items/items.service';
 import { Item } from '../../core/items/item.model';
@@ -36,7 +36,7 @@ fdescribe('ItemsEffects', () => {
       spyOn(itemsService, 'all').and.returnValue(of(items));
 
       actions$ = hot('-a-|', { a: new LoadItems() });
-      const expected$ = cold('-a-|', { a: new ItemsLoadedSuccess(items) });
+      const expected$ = cold('-a-|', { a: new ItemsLoaded(items) });
 
       expect(effects$.loadItems$).toBeObservable(expected$);
       expect(itemsService.all).toHaveBeenCalled();
@@ -60,7 +60,7 @@ fdescribe('ItemsEffects', () => {
       spyOn(itemsService, 'create').and.returnValue(of(createdItem));
 
       actions$ = hot('-a-|', { a: new AddItem(item) });
-      const expected$ = cold('-a-|', { a: new AddItemSuccess(createdItem) });
+      const expected$ = cold('-a-|', { a: new AddItem(createdItem) });
 
       expect(effects$.addItem$).toBeObservable(expected$);
       expect(itemsService.create).toHaveBeenCalledWith(item);
@@ -84,7 +84,7 @@ fdescribe('ItemsEffects', () => {
       spyOn(itemsService, 'update').and.returnValue(of(updatedItem));
 
       actions$ = hot('-a-|', { a: new UpdateItem(item) });
-      const expected$ = cold('-a-|', { a: new UpdateItemSuccess(updatedItem) });
+      const expected$ = cold('-a-|', { a: new UpdateItem(updatedItem) });
 
       expect(effects$.updateItem$).toBeObservable(expected$);
       expect(itemsService.update).toHaveBeenCalledWith(item);
@@ -107,7 +107,7 @@ fdescribe('ItemsEffects', () => {
       spyOn(itemsService, 'delete').and.returnValue(of(item));
 
       actions$ = hot('-a-|', { a: new DeleteItem(item) });
-      const expected$ = cold('-a-|', { a: new DeleteItemSuccess(item) });
+      const expected$ = cold('-a-|', { a: new ItemDeleted(item) });
 
       expect(effects$.deleteItem$).toBeObservable(expected$);
       expect(itemsService.delete).toHaveBeenCalledWith(item);

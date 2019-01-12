@@ -4,14 +4,14 @@ import { Item } from '../../core/items/item.model';
 export enum ItemsActionTypes {
   ItemsAction = '[Items] Action',
   ItemSelected = '[Items Page] Item Selected',
-  LoadItems = '[Items Page] Load Items Request',
-  ItemsLoadedSuccess = '[Items/API] Items Loaded Success',
-  AddItem = '[Items Page] Add Item Request',
-  ItemAddedSuccess = '[Items/API] Item Added Success',
-  UpdateItem = '[Items] Update Item Request',
-  ItemUpdatedSuccess = '[Items/API] Item Updated Success',
-  DeleteItem = '[Items Page] Delete Item Request',
-  ItemDeletedSuccess = '[Items] Item Deleted Success',
+  LoadItems = '[Items Page] Load Items',
+  ItemsLoaded = '[Items/API] Items Loaded',
+  AddItem = '[Items Page] Add Item',
+  ItemAdded = '[Items/API] Item Added',
+  UpdateItem = '[Items] Update Item',
+  ItemUpdated = '[Items/API] Item Updated',
+  DeleteItem = '[Items Page] Delete Item',
+  ItemDeleted = '[Items] Item Deleted',
 }
 
 export class Items implements Action {
@@ -28,8 +28,8 @@ export class LoadItems implements Action {
   readonly type = ItemsActionTypes.LoadItems;
 }
 
-export class ItemsLoadedSuccess implements Action {
-  readonly type = ItemsActionTypes.ItemsLoadedSuccess;
+export class ItemsLoaded implements Action {
+  readonly type = ItemsActionTypes.ItemsLoaded;
   
   constructor(public payload: Item[]) { }
 }
@@ -40,8 +40,8 @@ export class AddItem implements Action {
   constructor(public payload: Item) { }
 }
 
-export class AddItemSuccess implements Action {
-  readonly type = ItemsActionTypes.ItemAddedSuccess;
+export class ItemAdded implements Action {
+  readonly type = ItemsActionTypes.ItemAdded;
   
   constructor(public payload: Item) { }
 }
@@ -52,8 +52,8 @@ export class UpdateItem implements Action {
   constructor(public payload: Item) { }
 }
 
-export class UpdateItemSuccess implements Action {
-  readonly type = ItemsActionTypes.ItemUpdatedSuccess;
+export class ItemUpdated implements Action {
+  readonly type = ItemsActionTypes.ItemUpdated;
   
   constructor(public payload: Item) { }
 }
@@ -64,8 +64,8 @@ export class DeleteItem implements Action {
   constructor(public payload: Item) { }
 }
 
-export class DeleteItemSuccess implements Action {
-  readonly type = ItemsActionTypes.ItemDeletedSuccess;
+export class ItemDeleted implements Action {
+  readonly type = ItemsActionTypes.ItemDeleted;
   
   constructor(public payload: Item) { }
 }
@@ -73,11 +73,11 @@ export class DeleteItemSuccess implements Action {
 export type ItemsActions = Items
   | ItemSelected
   | LoadItems
-  | ItemsLoadedSuccess
+  | ItemsLoaded
   | AddItem
-  | AddItemSuccess
+  | ItemAdded
   | UpdateItem
-  | UpdateItemSuccess
+  | ItemUpdated
   | DeleteItem
-  | DeleteItemSuccess
+  | ItemDeleted
 ;

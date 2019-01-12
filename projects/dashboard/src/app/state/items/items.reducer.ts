@@ -23,19 +23,19 @@ export function itemsReducer(state = initialState, action: ItemsActions): ItemsS
       return Object.assign({}, state, { selectedItemId: action.payload });
     }
 
-    case ItemsActionTypes.ItemsLoadedSuccess: {
+    case ItemsActionTypes.ItemsLoaded: {
       return adapter.addAll(action.payload, state);
     }
 
-    case ItemsActionTypes.ItemAddedSuccess: {
+    case ItemsActionTypes.ItemAdded: {
       return adapter.addOne(action.payload, state);
     }
 
-    case ItemsActionTypes.ItemUpdatedSuccess: {
+    case ItemsActionTypes.ItemUpdated: {
       return adapter.upsertOne(action.payload, state);
     }
 
-    case ItemsActionTypes.ItemDeletedSuccess: {
+    case ItemsActionTypes.ItemDeleted: {
       return adapter.removeOne(action.payload.id, state);
     }
 

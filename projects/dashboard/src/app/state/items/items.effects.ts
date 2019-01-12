@@ -8,12 +8,12 @@ import { ItemsService } from '../../core/items/items.service';
 import {
   AddItem,
   DeleteItem,
-  AddItemSuccess,
-  DeleteItemSuccess,
+  ItemAdded,
+  ItemDeleted,
   ItemsActionTypes,
-  ItemsLoadedSuccess,
-  UpdateItemSuccess,
+  ItemsLoaded,
   UpdateItem,
+  ItemUpdated,
 } from './items.actions';
 
 @Injectable({providedIn: 'root'})
@@ -25,7 +25,7 @@ export class ItemsEffects {
     ofType(ItemsActionTypes.LoadItems), 
     mergeMap(() => 
       this.itemsService.all().pipe(
-        map((res: Item[]) => new ItemsLoadedSuccess(res)),
+        map((res: Item[]) => new ItemsLoaded(res)),
         catchError(() => EMPTY)
       )
     )
@@ -36,7 +36,7 @@ export class ItemsEffects {
     ofType(ItemsActionTypes.AddItem), 
     mergeMap((action: AddItem) => 
       this.itemsService.create(action.payload).pipe(
-        map((res: Item) => new AddItemSuccess(res)),
+        map((res: Item) => new ItemAdded(res)),
         catchError(() => EMPTY)
       )
     )
@@ -47,7 +47,7 @@ export class ItemsEffects {
     ofType(ItemsActionTypes.UpdateItem), 
     mergeMap((action: UpdateItem) => 
       this.itemsService.update(action.payload).pipe(
-        map((res: Item) => new UpdateItemSuccess(res)),
+        map((res: Item) => new ItemUpdated(res)),
         catchError(() => EMPTY)
       )
     )
@@ -58,7 +58,7 @@ export class ItemsEffects {
     ofType(ItemsActionTypes.DeleteItem), 
     mergeMap((action: DeleteItem) => 
       this.itemsService.delete(action.payload).pipe(
-        map(_ => new DeleteItemSuccess(action.payload)),
+        map(_ => new ItemDeleted(action.payload)),
         catchError(() => EMPTY)
       )
     )

@@ -1,4 +1,4 @@
-import { AddItemSuccess, DeleteItemSuccess, ItemsActionTypes, ItemSelected, ItemsLoadedSuccess, UpdateItemSuccess } from './items.actions';
+import { AddItem, ItemDeleted, ItemsActionTypes, ItemSelected, ItemsLoaded, UpdateItem } from './items.actions';
 import { initialState, itemsReducer } from './items.reducer';
 import { Action } from '@ngrx/store';
 import { Item } from '../../core/items/item.model';
@@ -11,40 +11,40 @@ fdescribe('itemsReducer', () => {
     expect(actual).toEqual(initialState);
   });
 
-  it(`${ItemsActionTypes.ItemsLoadedSuccess} action should replace state with payload`, () => {
+  it(`${ItemsActionTypes.ItemsLoaded} action should replace state with payload`, () => {
     const exampleItems: Item[] = [{id: 'cb1234-sa', name: 'test', description: 'testing', price: 10}];
     const entities = {
       'cb1234-sa': exampleItems[0]
     };
 
-    const action: ItemsLoadedSuccess = new ItemsLoadedSuccess(exampleItems);
+    const action: ItemsLoaded = new ItemsLoaded(exampleItems);
     const state = itemsReducer(initialState, action);
     expect(state.entities).toEqual(entities);
   });
 
-  it(`${ItemsActionTypes.ItemAddedSuccess} action should add item to state`, () => {
+  it(`${ItemsActionTypes.ItemAdded} action should add item to state`, () => {
     const addedItem: Item = {id: 'added-item', name: 'added', description: 'added testing', price: 1001};
     const entities = {
       'added-item': addedItem
     };
 
-    const action: AddItemSuccess = new AddItemSuccess(addedItem);
+    const action: AddItem = new AddItem(addedItem);
     const state = itemsReducer(initialState, action);
     expect(state.entities).toEqual(entities);
   });
 
-  it(`${ItemsActionTypes.ItemUpdatedSuccess} action should update item in state`, () => {
+  it(`${ItemsActionTypes.ItemUpdated} action should update item in state`, () => {
     const existingEntities = { 'existing-item': { id: 'existing-item', name: 'existing', description: 'existing testing', price: 1001 } };
     const existingState = {...initialState, entities: existingEntities};
 
     const updatedItem: Item = {id: 'existing-item', name: 'Updated item', description: 'updated testing', price: 320};
 
-    const action: UpdateItemSuccess = new UpdateItemSuccess(updatedItem);
+    const action: UpdateItem = new UpdateItem(updatedItem);
     const state = itemsReducer(existingState, action);
     expect(state.entities['existing-item']).toEqual(updatedItem);
   });
 
-  it(`${ItemsActionTypes.ItemDeletedSuccess} action should remove item from state`, () => {
+  it(`${ItemsActionTypes.ItemDeleted} action should remove item from state`, () => {
     const existingEntities = {
       'existing-item': { id: 'existing-item', name: 'existing', description: 'existing testing', price: 1001 },
       'another-item': { id: 'another-item', name: 'another', description: 'another testing', price: 5824 },
@@ -53,7 +53,7 @@ fdescribe('itemsReducer', () => {
 
     const deletedItem: Item = { id: 'another-item', name: 'another', description: 'another testing', price: 5824 };
 
-    const action: DeleteItemSuccess = new DeleteItemSuccess(deletedItem);
+    const action: ItemDeleted = new ItemDeleted(deletedItem);
     const state = itemsReducer(existingState, action);
     expect(state.entities['another-item']).not.toBeTruthy();
   });
